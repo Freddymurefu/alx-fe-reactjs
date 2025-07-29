@@ -1,8 +1,8 @@
 function MainContent() {
     return(
-        <header>
+        <main>
   <h1>I love to visit New York, Paris, and Tokyo.</h1>
-</header>
+</main>
     )
 }
 
