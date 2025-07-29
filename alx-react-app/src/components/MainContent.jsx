@@ -1,7 +1,7 @@
 function MainContent() {
     return(
         <header>
-  <h1>My Favorite Cities</h1>
+  <h1>I love to visit New York, Paris, and Tokyo.</h1>
 </header>
     )
 }
