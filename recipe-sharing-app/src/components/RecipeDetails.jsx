@@ -1,4 +1,5 @@
 import { useRecipeStore } from './recipeStore';
+import DeleteRecipeButton from './DeleteRecipeButton';
 
 const RecipeDetails = () => {
   const selectedRecipe = useRecipeStore((state) => state.selectedRecipe);
@@ -10,8 +11,11 @@ const RecipeDetails = () => {
     <div style={{ border: '2px solid black', padding: '1rem', marginBottom: '1rem' }}>
       <h2>{selectedRecipe.title}</h2>
       <p>{selectedRecipe.description}</p>
-      <p><strong>ID:</strong> {selectedRecipe.id}</p> {/* <-- This is what the checker wants */}
+      <p><strong>ID:</strong> {selectedRecipe.id}</p>
       <button onClick={clearSelectedRecipe}>Close</button>
+      
+      {/* Delete button added below */}
+      <DeleteRecipeButton recipeId={selectedRecipe.id} />
     </div>
   );
 };

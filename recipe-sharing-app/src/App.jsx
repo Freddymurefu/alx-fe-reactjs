@@ -1,10 +1,9 @@
-import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
 import RecipeList from './components/RecipeList';
 import AddRecipeForm from './components/AddRecipeForm';
 import RecipeDetails from './components/RecipeDetails';
 import EditRecipeForm from './components/EditRecipeForm';
+import DeleteRecipeButton from './components/DeleteRecipeButton';
 
 function App() {
   return (
@@ -22,7 +21,8 @@ function App() {
             }
           />
           <Route path="/recipes/:id" element={<RecipeDetails />} />
-          <Route path="/edit/:id" element={<EditRecipeForm />} />
+          <Route path="/recipes/:id/edit" element={<EditRecipeForm />} />
+          <Route path="/recipes/:id/delete" element={<DeleteRecipeButton />} />
         </Routes>
       </div>
     </Router>
