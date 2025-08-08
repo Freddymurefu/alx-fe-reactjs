@@ -1,25 +1,26 @@
 import { useRecipeStore } from './recipeStore';
-import RecipeDetails from './RecipeDetails';
-import EditRecipeForm from './EditRecipeForm';
-import DeleteRecipeButton from './DeleteRecipeButton';
 
 const RecipeList = () => {
-  const recipes = useRecipeStore((state) => state.recipes);
-  const deleteRecipe = useRecipeStore((state) => state.deleteRecipe);
-  const setSelectedRecipe = useRecipeStore((state) => state.setSelectedRecipe);
+  const filteredRecipes = useRecipeStore((state) => state.filteredRecipes);
+  const addFavorite = useRecipeStore((state) => state.addFavorite);
+
+  if (!Array.isArray(filteredRecipes)) {
+    return <p>No recipes available.</p>;
+  }
 
   return (
     <div>
-      <h2>Recipes</h2>
-      <ul>
-        {recipes.map((recipe) => (
-          <li key={recipe.id}>
-            <strong>{recipe.title}</strong> - {recipe.description}
-            <button onClick={() => deleteRecipe(recipe.id)}>Delete</button>
-            <button onClick={() => setSelectedRecipe(recipe)}>View</button>
-          </li>
-        ))}
-      </ul>
+      {filteredRecipes.length === 0 ? (
+        <p>No recipes found.</p>
+      ) : (
+        filteredRecipes.map((recipe) => (
+          <div key={recipe.id}>
+            <h3>{recipe.title}</h3>
+            <p>{recipe.description}</p>
+            <button onClick={() => addFavorite(recipe.id)}>Favorite</button>
+          </div>
+        ))
+      )}
     </div>
   );
 };
