@@ -4,8 +4,11 @@ import AddRecipeForm from './components/AddRecipeForm';
 import RecipeDetails from './components/RecipeDetails';
 import EditRecipeForm from './components/EditRecipeForm';
 import DeleteRecipeButton from './components/DeleteRecipeButton';
+import { useRecipeStore } from './components/recipeStore';
 
 function App() {
+  const selectedRecipe = useRecipeStore((state) => state.selectedRecipe);
+
   return (
     <Router>
       <div className="App">
@@ -20,7 +23,10 @@ function App() {
               </>
             }
           />
-          <Route path="/recipes/:id" element={<RecipeDetails />} />
+          <Route
+            path="/recipes/:id"
+            element={<RecipeDetails recipe={selectedRecipe} />} // <-- pass recipe as prop
+          />
           <Route path="/recipes/:id/edit" element={<EditRecipeForm />} />
           <Route path="/recipes/:id/delete" element={<DeleteRecipeButton />} />
         </Routes>
