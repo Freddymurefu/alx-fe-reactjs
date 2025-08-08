@@ -3,6 +3,14 @@ import { create } from 'zustand';
 export const useRecipeStore = create((set) => ({
   recipes: [],
 
+  // --- Selected recipe state ---
+  selectedRecipe: null,
+
+  setSelectedRecipe: (recipe) => set({ selectedRecipe: recipe }),
+
+  clearSelectedRecipe: () => set({ selectedRecipe: null }),
+
+  // --- CRUD functions ---
   addRecipe: (recipe) => {
     const newRecipe = {
       id: crypto.randomUUID(), // generate unique ID
