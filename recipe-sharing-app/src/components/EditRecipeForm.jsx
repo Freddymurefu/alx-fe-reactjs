@@ -20,7 +20,7 @@ const EditRecipeForm = ({ recipeId }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     updateRecipe({
-      ...recipe,
+      id: recipe.id, // explicitly use recipe.id
       title,
       description,
       ingredients,
