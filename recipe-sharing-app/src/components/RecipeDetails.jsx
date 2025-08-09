@@ -1,12 +1,27 @@
-const RecipeDetails = ({ recipe }) => {
-  if (!recipe) return null;
+import { useParams } from 'react-router-dom';
+import { useRecipeStore } from './recipeStore';
+import EditRecipeForm from './EditRecipeForm';
+import DeleteRecipeButton from './DeleteRecipeButton';
+
+const RecipeDetails = () => {
+  const { id } = useParams();
+  const recipe = useRecipeStore(state =>
+    state.recipes.find(r => r.id === id)
+  );
+
+  if (!recipe) {
+    return <p>Recipe not found.</p>;
+  }
 
   return (
-    <div style={{ border: '2px solid black', padding: '1rem', marginBottom: '1rem' }}>
-      <h2>{recipe.title}</h2>
+    <div>
+      <h1>{recipe.title}</h1>
       <p>{recipe.description}</p>
-      <p><strong>ID:</strong> {recipe.id}</p> {/* <-- Now matches what checker wants */}
-      <button onClick={() => window.history.back()}>Close</button>
+
+      <h3>Edit Recipe</h3>
+      <EditRecipeForm recipeId={id} />
+
+      <DeleteRecipeButton recipeId={id} />
     </div>
   );
 };

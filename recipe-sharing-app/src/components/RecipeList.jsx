@@ -1,22 +1,20 @@
+import { Link } from 'react-router-dom';
 import { useRecipeStore } from './recipeStore';
-import RecipeDetails from './RecipeDetails';
-import EditRecipeForm from './EditRecipeForm';
-import DeleteRecipeButton from './DeleteRecipeButton';
 
 const RecipeList = () => {
-  const recipes = useRecipeStore((state) => state.recipes);
-  const deleteRecipe = useRecipeStore((state) => state.deleteRecipe);
-  const setSelectedRecipe = useRecipeStore((state) => state.setSelectedRecipe);
+  const recipes = useRecipeStore(state => state.recipes);
+
+  if (recipes.length === 0) {
+    return <p>No recipes found.</p>;
+  }
 
   return (
     <div>
-      <h2>Recipes</h2>
+      <h1>All Recipes</h1>
       <ul>
-        {recipes.map((recipe) => (
+        {recipes.map(recipe => (
           <li key={recipe.id}>
-            <strong>{recipe.title}</strong> - {recipe.description}
-            <button onClick={() => deleteRecipe(recipe.id)}>Delete</button>
-            <button onClick={() => setSelectedRecipe(recipe)}>View</button>
+            <Link to={`/recipes/${recipe.id}`}>{recipe.title}</Link>
           </li>
         ))}
       </ul>
