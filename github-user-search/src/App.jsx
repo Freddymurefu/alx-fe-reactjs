@@ -3,6 +3,7 @@ console.log("Github Api Key:" , apiKey)
 
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
+import { Search } from "./components/Search"
 function Home(){
   return(
     <h1>Welcome to My Home Page</h1>
