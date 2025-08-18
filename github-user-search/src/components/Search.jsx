@@ -1,6 +1,8 @@
+
 import React from 'react'
 import { useState } from 'react'
 import { fetchUserData } from '../services/GithubService'
+
 
 function Search() {
     const [username, setUsername] = useState("")
@@ -53,7 +55,7 @@ function Search() {
       }
 
     return (
-        <div>
+        <div className='max-w-3xl mx-auto p-4'>
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
@@ -80,12 +82,15 @@ function Search() {
             {loading && <p>Loading...</p>}
             {error && <p>Looks like we cant find the user</p>}
 
+
             { users.length > 0 && (
                 <div>
                     {users.map((u) => (
                         <div key={u.id}>
                             <img src={u.avatar_url} alt={u.login} width="100" />
                             <h2>{u.login}</h2>
+                            <p>Location: {u.location || "Not Available"}</p>
+                            <p>Public Repos: {u.public_repos}</p>
                             <a href={u.html_url} target='_blank' rel='noreferrer'>
                                 View Profile
                             </a>
