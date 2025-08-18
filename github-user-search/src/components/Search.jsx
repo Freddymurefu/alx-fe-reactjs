@@ -25,7 +25,6 @@ function Search() {
         setCount(0)
 
         try {
-            console.log({ username, location, minRepos })
             const data = await fetchUserData(username, location, minRepos, 1)
             setUsers(data.items)
             setCount(data.total_count)
@@ -35,7 +34,6 @@ function Search() {
             setLoading(false)
         }
 
-        console.log("Search for:", username)
     }
 
         const loadMore = async() => {
