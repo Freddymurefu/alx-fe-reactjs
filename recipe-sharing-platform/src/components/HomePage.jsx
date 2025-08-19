@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
-import recipesData from './data.json'
+import recipesData from '../data.json'
+
+import { Link } from 'react-router-dom'
 
 
 
@@ -26,7 +28,8 @@ function HomePage() {
               />
             <h2 className='text-lg font-semibold mt-3'>{r.title}</h2>
             <p className='text-sm text-gray-600 mt-1'>{r.summary}</p>
-            <button className='mt-3 px-3 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-800'>View Recipe</button>
+            <Link to={`/recipes/${r.id}`}
+className='mt-3 inline-block px-3 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-800'> View Recipe</Link>
             </article>
             )}
             </div>
@@ -36,5 +39,7 @@ function HomePage() {
         </div>
     )
 };
+
+
 
 export default HomePage;

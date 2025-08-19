@@ -1,17 +1,15 @@
 import { useState } from 'react'
 import HomePage from './components/HomePage'
-import './App.css'
-
+import { Routes, Route } from 'react-router-dom';
+import RecipeDetail from './components/RecipeDetail'
 
 function App() {
   
   return (
-    <>
-      <div>
-      <HomePage />
-      </div>
-      
-    </>
+   <Routes>
+    <Route path='/' element={<HomePage />} />
+    <Route path="/recipe/:id" element={<RecipeDetail />} />
+   </Routes>
   )
 }
 
