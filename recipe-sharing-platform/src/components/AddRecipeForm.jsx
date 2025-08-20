@@ -9,7 +9,8 @@ function AddRecipeForm() {
   const [errors, setErrors] = useState({});
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
+    const name= event.target.name
+    const value  = event.target.value
 
     setDetails((prevDetails) => ({
       ...prevDetails,
