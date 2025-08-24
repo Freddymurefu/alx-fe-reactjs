@@ -4,31 +4,26 @@ function RegistrationForm() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({}); // <-- for validation errors
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Basic validation
-    if (!username) {
-      alert("Username is required");
-      return;
-    }
+    const newErrors = {};
 
-    if (!email) {
-      alert("Email is required");
-      return;
-    }
+    if (!username.trim()) newErrors.username = "Username is required";
+    if (!email.trim()) newErrors.email = "Email is required";
+    if (!password.trim()) newErrors.password = "Password is required";
 
-    if (!password) {
-      alert("Password is required");
-      return;
-    }
+    setErrors(newErrors);
 
-    console.log({ username, email, password });
-    // You can reset form here if needed
-    setUsername("");
-    setEmail("");
-    setPassword("");
+    if (Object.keys(newErrors).length === 0) {
+      console.log({ username, email, password });
+      // Reset form
+      setUsername("");
+      setEmail("");
+      setPassword("");
+    }
   };
 
   return (
@@ -41,6 +36,7 @@ function RegistrationForm() {
           onChange={(e) => setUsername(e.target.value)}
         />
       </label>
+      {errors.username && <div role="alert">{errors.username}</div>}
 
       <label>
         Email Address
@@ -50,6 +46,7 @@ function RegistrationForm() {
           onChange={(e) => setEmail(e.target.value)}
         />
       </label>
+      {errors.email && <div role="alert">{errors.email}</div>}
 
       <label>
         Password
@@ -59,6 +56,7 @@ function RegistrationForm() {
           onChange={(e) => setPassword(e.target.value)}
         />
       </label>
+      {errors.password && <div role="alert">{errors.password}</div>}
 
       <button type="submit">Register</button>
     </form>
