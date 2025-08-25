@@ -1,88 +1,47 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-const validationSchema = Yup.object({
-  username: Yup.string()
-    .trim()
-    .required("Username is required"),
-  email: Yup.string()
-    .trim()
-    .email("Invalid email address")
-    .required("Email is required"),
-  password: Yup.string()
-    .trim()
-    .min(6, "Minimum 6 characters")
-    .required("Password is required"),
-});
-
 function FormikForm() {
+  const initialValues = { username: "", email: "", password: "" };
+
+  const validationSchema = Yup.object({
+    username: Yup.string().required("Username is required"),
+    email: Yup.string().email("Invalid email").required("Email is required"),
+    password: Yup.string().required("Password is required")
+  });
+
+  const handleSubmit = (values, { resetForm }) => {
+    console.log(values);
+    resetForm();
+  };
+
   return (
     <Formik
-      initialValues={{ username: "", email: "", password: "" }}
+      initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={(values) => {
-        console.log("Formik + Yup submit:", values);
-        // TODO: send to API
-      }}
+      onSubmit={handleSubmit}
     >
-      {({ errors, touched, isValid, dirty }) => (
-        <Form noValidate>
-          <label htmlFor="username">User Name</label>
-          <Field
-            id="username"
-            name="username"
-            type="text"
-            aria-invalid={touched.username && !!errors.username}
-            aria-describedby={
-              touched.username && errors.username ? "username-error" : undefined
-            }
-          />
-          <ErrorMessage
-            name="username"
-            component="div"
-            id="username-error"
-            role="alert"
-          />
+      <Form>
+        <div>
+          <label htmlFor="username">Username</label>
+          <Field type="text" name="username" id="username" />
+          <ErrorMessage name="username" component="div" role="alert" />
+        </div>
 
-          <label htmlFor="email">Email Address</label>
-          <Field
-            id="email"
-            name="email"
-            type="email"
-            aria-invalid={touched.email && !!errors.email}
-            aria-describedby={
-              touched.email && errors.email ? "email-error" : undefined
-            }
-          />
-          <ErrorMessage
-            name="email"
-            component="div"
-            id="email-error"
-            role="alert"
-          />
+        <div>
+          <label htmlFor="email">Email</label>
+          <Field type="email" name="email" id="email" />
+          <ErrorMessage name="email" component="div" role="alert" />
+        </div>
 
+        <div>
           <label htmlFor="password">Password</label>
-          <Field
-            id="password"
-            name="password"
-            type="password"
-            aria-invalid={touched.password && !!errors.password}
-            aria-describedby={
-              touched.password && errors.password ? "password-error" : undefined
-            }
-          />
-          <ErrorMessage
-            name="password"
-            component="div"
-            id="password-error"
-            role="alert"
-          />
+          <Field type="password" name="password" id="password" />
+          <ErrorMessage name="password" component="div" role="alert" />
+        </div>
 
-          <button type="submit" disabled={!(isValid && dirty)}>
-            Register
-          </button>
-        </Form>
-      )}
+        <button type="submit">Register</button>
+      </Form>
     </Formik>
   );
 }

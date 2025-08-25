@@ -1,43 +1,66 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-const schema = Yup.object({
-  username: Yup.string().trim().required("Username is required"),
-  email: Yup.string().trim().email("Invalid email address").required("Email is required"),
-  password: Yup.string().trim().min(6, "Minimum 6 characters").required("Password is required"),
-});
-
 function FormikYupForm() {
+  const initialValues = {
+    username: "",
+    email: "",
+    password: ""
+  };
+
+  const validationSchema = Yup.object({
+    username: Yup.string().required("Username is required"),
+    email: Yup.string().email("Invalid email").required("Email is required"),
+    password: Yup.string().required("Password is required")
+  });
+
+  const handleSubmit = (values, { resetForm }) => {
+    console.log("Form submitted:", values);
+    resetForm(); // Optional: clears form after submission
+  };
+
   return (
     <Formik
-      initialValues={{ username: "", email: "", password: "" }}
-      validationSchema={schema}
-      onSubmit={(values) => {
-        console.log("Formik (Yup) submit:", values);
-        // TODO: send to API
-      }}
-      validateOnBlur
-      validateOnChange
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
     >
-      {({ isValid, dirty }) => (
-        <Form noValidate>
-          <label htmlFor="username">User Name</label>
-          <Field id="username" name="username" type="text" />
+      <Form noValidate>
+        <div>
+          <label htmlFor="username">Username</label>
+          <Field
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Enter username"
+          />
           <ErrorMessage name="username" component="div" role="alert" />
+        </div>
 
-          <label htmlFor="email">Email Address</label>
-          <Field id="email" name="email" type="email" />
+        <div>
+          <label htmlFor="email">Email</label>
+          <Field
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Enter email"
+          />
           <ErrorMessage name="email" component="div" role="alert" />
+        </div>
 
+        <div>
           <label htmlFor="password">Password</label>
-          <Field id="password" name="password" type="password" />
+          <Field
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter password"
+          />
           <ErrorMessage name="password" component="div" role="alert" />
+        </div>
 
-          <button type="submit" disabled={!(isValid && dirty)}>
-            Register
-          </button>
-        </Form>
-      )}
+        <button type="submit">Register</button>
+      </Form>
     </Formik>
   );
 }
