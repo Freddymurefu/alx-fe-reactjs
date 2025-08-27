@@ -6,6 +6,8 @@ import ProfileSettings from "./components/Profile/ProfileSettings";
 import Post from "./components/Post";
 import Dashboard from "./components/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
+import BlogPost from "./components/BlogPost";
+
 
 export default function App() {
   return (
@@ -18,6 +20,8 @@ export default function App() {
         <Route path="/profile" element={<Profile />}>
           <Route path="details" element={<ProfileDetails />} />
           <Route path="settings" element={<ProfileSettings />} />
+          <Route path="/blog/:id" element={<BlogPost />} />
+
         </Route>
 
         {/* Dynamic route */}
