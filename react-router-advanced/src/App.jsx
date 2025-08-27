@@ -1,41 +1,35 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
+import About from "./components/About";
 import Profile from "./components/Profile";
 import ProfileDetails from "./components/Profile/ProfileDetails";
 import ProfileSettings from "./components/Profile/ProfileSettings";
-import Post from "./components/Post";
-import Dashboard from "./components/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import BlogPost from "./components/BlogPost";
-
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Regular route */}
+        {/* Regular routes */}
         <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
 
-        {/* Nested routes under Profile */}
-        <Route path="/profile" element={<Profile />}>
+        {/* Protected and nested routes under Profile */}
+        <Route
+          path="/profile/*"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        >
           <Route path="details" element={<ProfileDetails />} />
           <Route path="settings" element={<ProfileSettings />} />
-          <Route path="/blog/:id" element={<BlogPost />} />
-
         </Route>
 
         {/* Dynamic route */}
-        <Route path="/posts/:id" element={<Post />} />
-
-        {/* Protected route */}
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/blog/:id" element={<BlogPost />} />
       </Routes>
     </BrowserRouter>
   );
