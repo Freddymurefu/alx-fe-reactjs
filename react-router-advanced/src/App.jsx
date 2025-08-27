@@ -1,36 +1,38 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import Home from "./pages/Home";
-import Profile from "./pages/Profile";
-import About from "./pages/About";
-import BlogPost from "./pages/BlogPost";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./components/Home";
+import Profile from "./components/Profile";
+import ProfileDetails from "./components/Profile/ProfileDetails";
+import ProfileSettings from "./components/Profile/ProfileSettings";
+import Post from "./components/Post";
+import Dashboard from "./components/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-function App() {
+export default function App() {
   return (
     <BrowserRouter>
-      <div>
-        <nav>
-          <Link to="/">Home</Link> | <Link to="/about">About</Link> |{" "}
-          <Link to="/profile">Profile</Link> |{" "}
-          <Link to="/blog/1">Blog</Link>
-        </nav>
+      <Routes>
+        {/* Regular route */}
+        <Route path="/" element={<Home />} />
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route
-            path="/profile/*"
-            element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/blog/:id" element={<BlogPost />} />
-        </Routes>
-      </div>
+        {/* Nested routes under Profile */}
+        <Route path="/profile" element={<Profile />}>
+          <Route path="details" element={<ProfileDetails />} />
+          <Route path="settings" element={<ProfileSettings />} />
+        </Route>
+
+        {/* Dynamic route */}
+        <Route path="/posts/:id" element={<Post />} />
+
+        {/* Protected route */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
     </BrowserRouter>
   );
 }
-
-export default App;
