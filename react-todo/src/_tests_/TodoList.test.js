@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent, within } from '@testing-library/react';
-import '@testing-library/jest-dom'; // provides toBeInTheDocument, toHaveStyle
+import '@testing-library/jest-dom';
 import TodoList from '../components/TodoList';
 
 describe('TodoList Component', () => {
@@ -25,23 +25,18 @@ describe('TodoList Component', () => {
     render(<TodoList />);
     const todo = screen.getByText('Learn React');
 
-    // Initially not completed
-    expect(todo).not.toHaveStyle('text-decoration: line-through');
+    expect(todo).not.toHaveClass('completed');
 
     fireEvent.click(todo);
-    expect(todo).toHaveStyle('text-decoration: line-through');
+    expect(todo).toHaveClass('completed');
 
     fireEvent.click(todo);
-    expect(todo).not.toHaveStyle('text-decoration: line-through');
+    expect(todo).not.toHaveClass('completed');
   });
 
   test('can delete a todo', () => {
     render(<TodoList />);
-
-    // find the specific todo item
     const todo = screen.getByText('Write Tests').closest('li');
-
-    // find the delete button only inside this todo
     const deleteButton = within(todo).getByRole('button', { name: /delete/i });
 
     fireEvent.click(deleteButton);

@@ -1,14 +1,8 @@
-import { useState } from 'react'
+import React from 'react';
 import TodoList from './components/TodoList';
 
 function App() {
-    return (
-    <>
-      <div className="App">
-      <TodoList /> {/* <-- render TodoList */}
-      </div>
-    </>
-  )
+  return <TodoList />;
 }
 
 export default App;
