@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, within } from '@testing-library/react';
+import '@testing-library/jest-dom'; // provides toBeInTheDocument, toHaveStyle
 import TodoList from '../components/TodoList';
 
 describe('TodoList Component', () => {
@@ -12,7 +13,7 @@ describe('TodoList Component', () => {
   test('can add a new todo', () => {
     render(<TodoList />);
     const input = screen.getByPlaceholderText('Add new todo');
-    const addButton = screen.getByText('Add');
+    const addButton = screen.getByRole('button', { name: /add/i });
 
     fireEvent.change(input, { target: { value: 'New Todo' } });
     fireEvent.click(addButton);
@@ -27,19 +28,24 @@ describe('TodoList Component', () => {
     // Initially not completed
     expect(todo).not.toHaveStyle('text-decoration: line-through');
 
-    fireEvent.click(todo); // toggle
+    fireEvent.click(todo);
     expect(todo).toHaveStyle('text-decoration: line-through');
 
-    fireEvent.click(todo); // toggle back
+    fireEvent.click(todo);
     expect(todo).not.toHaveStyle('text-decoration: line-through');
   });
 
   test('can delete a todo', () => {
     render(<TodoList />);
-    const todo = screen.getByText('Write Tests');
-    const deleteButton = todo.nextSibling; // the button
+
+    // find the specific todo item
+    const todo = screen.getByText('Write Tests').closest('li');
+
+    // find the delete button only inside this todo
+    const deleteButton = within(todo).getByRole('button', { name: /delete/i });
 
     fireEvent.click(deleteButton);
+
     expect(screen.queryByText('Write Tests')).not.toBeInTheDocument();
   });
 });
